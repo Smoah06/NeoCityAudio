@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+    <!-- The scene is like the HTML body tag, it defines the visual content -->
+    <Scene>
+        
+        <!--     World Meta Data, Background colour is in Generic Decimal colour format     -->
+        <WorldInfo title='Demo Land' />
+		<Background transparency="1" />
+        
+        <!--     The players view position     -->
+        <Viewpoint position="0 0 -11" orientation="0 1 0 3.14" centerOfRotation="0.00000 0.00000 0.00000" fieldOfView="0.78540" description=""></Viewpoint>
+        <!--     How the player moves within the world, there are a number of options     -->
+	    <navigationInfo type='"NONE"' headlight='true' speed='0.5' avatarSize='120' ></navigationInfo>
+		
+        <!--     Objects in the world     -->
+        <!--     Transform tags are like divs, they allow us to position and manipulate everything within them     -->
+        <Transform DEF='COOL' translation='0 -2.5 0' >
+            
+            <Transform translation= "0 0 0" scale="1 1 1">
+                <inline url="skelecool.x3d" />
+            </Transform>
+
+        </Transform>
+
+        <TimeSensor DEF='NORMAL_TIMER' cycleInterval='2' loop='true' />
+        <TimeSensor DEF='NORMAL_TIMER2' cycleInterval='1' loop='true' />
+        <OrientationInterpolator DEF='SPIN_ME' key='0.00 0.25 0.50 0.75 1.00' keyValue='0 1 0 0 0 1 0 1.57079 0 1 0 3.14159 0 1 0 4.7123889 0 1 0 6.2831852' />
+        <PositionInterpolator DEF="MOVE_ME" key="0 0.1 0.4 0.5 0.6 0.9 1" keyValue="0 -2.5 -2.5, 0 -2.5 -1.5, 0 -2.5 9, 0 -2.5 10, 0 -2.5 9, 0 -2.5 -1.5,  0 -2.5 -2.5"/>
+        <ROUTE fromNode='NORMAL_TIMER' fromField='fraction_changed' toNode='SPIN_ME' toField='set_fraction'/>
+        <ROUTE fromNode='SPIN_ME' fromField='value_changed' toNode='COOL' toField='rotation'/>
+        <ROUTE fromNode='NORMAL_TIMER2' fromField='fraction_changed' toNode='MOVE_ME' toField='set_fraction'/>
+        <ROUTE fromNode='MOVE_ME' fromField='value_changed' toNode='COOL' toField='translation'/>
+    </Scene>
+</X3D>
